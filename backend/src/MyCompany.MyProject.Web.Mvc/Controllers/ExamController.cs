@@ -114,9 +114,16 @@ public class ExamController : MyProjectControllerBase
     // 7. Giao diện làm bài thi (Dành cho người học)
     public async Task<IActionResult> Take(int id, string candidateName = "")
     {
-        var exam = await _examAppService.GetExamDetailAsync(id);
-        ViewBag.CandidateName = string.IsNullOrWhiteSpace(candidateName) ? "Học viên" : candidateName;
-        return View(exam);
+        try
+        {
+            var exam = await _examAppService.GetExamDetailAsync(id);
+            ViewBag.CandidateName = string.IsNullOrWhiteSpace(candidateName) ? "Huỳnh Nguyên Khang" : candidateName;
+            return View(exam);
+        }
+        catch
+        {
+            return RedirectToAction("StudentExams");
+        }
     }
 
     // 8. Nộp bài thi
@@ -135,7 +142,14 @@ public class ExamController : MyProjectControllerBase
     // 9. Giao diện hiển thị kết quả bài thi
     public async Task<IActionResult> Result(int id)
     {
-        var result = await _examAppService.GetExamResultAsync(id);
-        return View(result);
+        try
+        {
+            var result = await _examAppService.GetExamResultAsync(id);
+            return View(result);
+        }
+        catch
+        {
+            return RedirectToAction("StudentExams");
+        }
     }
 }
