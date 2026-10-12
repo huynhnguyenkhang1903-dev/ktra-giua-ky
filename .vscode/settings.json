@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "docs": true,
+    ".gitignore": true,
+    "toeic-exam.code-workspace": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "docs": true
+  },
+  "dotnet.defaultSolution": "backend/MyCompany.MyProject.sln",
+  "omnisharp.defaultLaunchSolution": "backend/MyCompany.MyProject.sln"
+}

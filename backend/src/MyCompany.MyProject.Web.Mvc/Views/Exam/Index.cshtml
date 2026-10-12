@@ -1,0 +1,119 @@
+@using MyCompany.MyProject.Exams.Dto
+@model List<ExamListDto>
+@{
+    ViewBag.Title = "Quản lý Đề thi TOEIC Reading";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><i class="fas fa-file-alt text-primary mr-2"></i>Quản lý Đề thi TOEIC Reading</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a asp-action="Import" class="btn btn-success shadow-sm">
+                    <i class="fas fa-file-upload mr-1"></i> Tạo đề thi từ file Word (.docx)
+                </a>
+                <a asp-action="StudentExams" class="btn btn-primary shadow-sm ml-2">
+                    <i class="fas fa-graduation-cap mr-1"></i> Xem giao diện Người học
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                <i class="fas fa-check-circle mr-2"></i>@TempData["SuccessMessage"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+        <div class="card card-primary card-outline shadow-sm">
+            <div class="card-header">
+                <h3 class="card-title font-weight-bold">Danh sách đề thi hiện có trong hệ thống</h3>
+                <div class="card-tools">
+                    <span class="badge badge-info p-2">Tổng số đề: @Model.Count</span>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                @if (Model == null || !Model.Any())
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-folder-open fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">Chưa có đề thi nào trong hệ thống</h4>
+                        <p class="text-muted">Giảng viên có thể tải lên đề thi mẫu Word (.docx) với cấu trúc thẻ chuẩn.</p>
+                        <a asp-action="Import" class="btn btn-success mt-2">
+                            <i class="fas fa-upload mr-1"></i> Tải lên đề thi ngay
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped align-middle mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 5%">#ID</th>
+                                    <th style="width: 35%">Tên Đề thi</th>
+                                    <th style="width: 15%">Thời gian thi</th>
+                                    <th style="width: 15%">Số câu hỏi</th>
+                                    <th style="width: 15%">Ngày tạo</th>
+                                    <th style="width: 15%" class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var exam in Model)
+                                {
+                                    <tr>
+                                        <td><strong>@exam.Id</strong></td>
+                                        <td>
+                                            <a asp-action="Details" asp-route-id="@exam.Id" class="font-weight-bold text-primary">
+                                                <i class="fas fa-book-reader mr-1"></i>@exam.Title
+                                            </a>
+                                            <div class="small text-muted">@exam.Description</div>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-warning p-2">
+                                                <i class="far fa-clock mr-1"></i>@exam.DurationMinutes phút
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-info p-2">
+                                                <i class="fas fa-list-ol mr-1"></i>@exam.TotalQuestions câu
+                                            </span>
+                                        </td>
+                                        <td>@exam.CreationTime.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a asp-action="Details" asp-route-id="@exam.Id" class="btn btn-sm btn-info" title="Xem trước đề thi">
+                                                    <i class="fas fa-eye"></i> Xem trước
+                                                </a>
+                                                <a asp-action="Edit" asp-route-id="@exam.Id" class="btn btn-sm btn-secondary" title="Chỉnh sửa nội dung">
+                                                    <i class="fas fa-edit"></i> Sửa
+                                                </a>
+                                                <a asp-action="Take" asp-route-id="@exam.Id" class="btn btn-sm btn-primary" title="Làm bài thi thử">
+                                                    <i class="fas fa-play"></i> Thi
+                                                </a>
+                                                <form asp-action="Delete" asp-route-id="@exam.Id" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đề thi này?');" style="display:inline;">
+                                                    <button type="submit" class="btn btn-sm btn-danger" title="Xóa đề thi">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

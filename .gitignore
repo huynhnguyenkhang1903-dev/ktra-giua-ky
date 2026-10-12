@@ -1,0 +1,27 @@
+# Exclude docs directory as requested
+docs/
+
+# Build Results & Binaries
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.pdb
+*.dll
+*.exe
+
+# Visual Studio / ReSharper / JetBrains
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS & Temporary Files
+.DS_Store
+Thumbs.db
+*.tmp

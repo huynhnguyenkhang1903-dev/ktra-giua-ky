@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title - TOEIC Exam App</title>
+
+    <!-- Google Fonts: Inter / Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 4.6 & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #3730a3;
+            --primary-light: #eef2ff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-app: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0f172a;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px 10px;
+        }
+
+        /* Mobile Device Mockup Frame */
+        .mobile-frame {
+            width: 100%;
+            max-width: 420px;
+            height: 890px;
+            background-color: var(--bg-app);
+            border-radius: 46px;
+            border: 10px solid #1e293b;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Status Bar (iPhone Dynamic Island / Notch style) */
+        .status-bar {
+            height: 44px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #0f172a;
+            z-index: 1000;
+            background: transparent;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .status-bar-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+        }
+
+        /* Dynamic Island / Speaker Pill */
+        .device-notch {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 24px;
+            background: #000000;
+            border-radius: 20px;
+            z-index: 1010;
+        }
+
+        /* Scrollable App Screen Content */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .app-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .app-content::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        /* Bottom Nav Bar (Figma style) */
+        .bottom-nav {
+            height: 68px;
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-shrink: 0;
+            padding-bottom: 8px;
+            z-index: 1000;
+        }
+
+        .nav-item-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-decoration: none !important;
+            transition: all 0.2s;
+        }
+
+        .nav-item-btn i {
+            font-size: 1.25rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-item-btn.active {
+            color: var(--primary-color);
+        }
+
+        /* Desktop Switcher Pill */
+        .desktop-bar {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        /* Responsive full-width on mobile phones */
+        @@media (max-width: 480px) {
+            body {
+                padding: 0;
+                background: var(--bg-app);
+            }
+            .mobile-frame {
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                border: none;
+                box-shadow: none;
+            }
+            .desktop-bar {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    <!-- Link chuyển sang giao diện Admin máy tính -->
+    <div class="desktop-bar">
+        <a href="/Exam" class="btn btn-sm btn-light shadow-sm rounded-pill font-weight-bold px-3">
+            <i class="fas fa-desktop text-primary mr-1"></i> Giao diện Admin Quản trị
+        </a>
+    </div>
+
+    <!-- Khung điện thoại di động (Mobile App Phone Mockup) -->
+    <div class="mobile-frame">
+        <div class="device-notch"></div>
+
+        <!-- Thanh Status Bar (Giống hình ảnh Figma) -->
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-bar-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <!-- Toàn bộ nội dung ứng dụng -->
+        <div class="app-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <!-- Scripts CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

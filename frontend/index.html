@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>TOEIC Reading App - Luyện đề TOEIC Mobile</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 4.6 & FontAwesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Figma Mobile Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Dynamic Island / iPhone Notch -->
+    <div class="device-notch"></div>
+    
+    <!-- Status Bar (9:41 AM) -->
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+
+    <!-- App Content Scrollable -->
+    <div class="app-content">
+      <!-- User Greeting -->
+      <div class="user-greeting">
+        <div>
+          <small class="text-muted font-weight-bold">Chào mừng trở lại,</small>
+          <h5 class="font-weight-bold mb-0 text-dark">Huỳnh Nguyên Khang 👋</h5>
+        </div>
+        <button class="btn btn-light rounded-circle shadow-sm" style="width: 40px; height: 40px; padding: 0;">
+          <i class="far fa-bell text-dark"></i>
+        </button>
+      </div>
+
+      <!-- Promo Card -->
+      <div class="promo-card">
+        <span class="badge badge-light text-primary px-2 py-1 mb-2 font-weight-bold">ETS TOEIC 2019</span>
+        <h5 class="font-weight-bold mb-1">TOEIC Reading Test 07</h5>
+        <p class="small text-white-50 mb-3">100 câu đọc hiểu chuẩn quốc tế (Part 5, 6, 7) - Thời gian 75 phút.</p>
+        <div class="d-flex align-items-center gap-2">
+          <a href="take.html" class="btn btn-light btn-sm font-weight-bold text-primary rounded-pill px-3 py-2 shadow-sm">
+            <i class="fas fa-play mr-1"></i> Bắt đầu thi ngay
+          </a>
+          <a href="https://localhost:44312/Exam/StudentExams" target="_blank" class="btn btn-outline-light btn-sm font-weight-bold rounded-pill px-3 py-2 ml-2" title="Mở trang ASP.NET MVC">
+            <i class="fas fa-server mr-1"></i> ASP.NET MVC
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Categories / Parts Filter -->
+      <div class="px-3 mb-2 font-weight-bold text-dark d-flex justify-content-between align-items-center">
+        <span>Cấu trúc đề thi Reading</span>
+        <span class="badge badge-primary px-2 py-1 font-weight-bold" style="background: var(--primary);">100 CÂU</span>
+      </div>
+
+      <div class="d-flex px-3 mb-3 gap-2" style="gap: 8px;">
+        <div class="part-pill flex-fill active">
+          <i class="fas fa-check-double mb-1 d-block"></i>
+          <div>Tất cả (100c)</div>
+        </div>
+        <div class="part-pill flex-fill">
+          <i class="fas fa-spell-check mb-1 d-block"></i>
+          <div>Part 5 (30c)</div>
+        </div>
+        <div class="part-pill flex-fill">
+          <i class="fas fa-align-left mb-1 d-block"></i>
+          <div>Part 6 (16c)</div>
+        </div>
+        <div class="part-pill flex-fill">
+          <i class="fas fa-book-reader mb-1 d-block"></i>
+          <div>Part 7 (54c)</div>
+        </div>
+      </div>
+
+      <!-- Exam List -->
+      <div class="px-3 mb-2 font-weight-bold text-dark">Danh sách đề thi đang mở</div>
+
+      <!-- Card Exam 1 -->
+      <div class="exam-card-m" onclick="openExamDetailModal()">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge badge-light text-primary font-weight-bold px-2 py-1" style="background: var(--primary-light);">
+            <i class="fas fa-star mr-1"></i> TEST TIÊU CHUẨN
+          </span>
+          <span class="badge badge-success px-2 py-1"><i class="fas fa-check-circle mr-1"></i>Sẵn sàng</span>
+        </div>
+        <h6 class="font-weight-bold text-dark mb-1">ETS TOEIC 2019 - Reading Test 07</h6>
+        <p class="small text-muted mb-3">Đầy đủ 100 câu hỏi được trích xuất từ file đề thi chính thức với hệ thống bài đọc phong phú.</p>
+        
+        <div class="d-flex align-items-center justify-content-between pt-2 border-top">
+          <div class="small text-muted font-weight-bold">
+            <i class="far fa-clock text-primary mr-1"></i> 75 phút &nbsp;&bull;&nbsp;
+            <i class="fas fa-list-ol text-primary mr-1"></i> 100 câu
+          </div>
+          <a href="take.html" class="btn btn-sm btn-primary rounded-pill font-weight-bold px-3" style="background: var(--primary); border: none;">
+            Làm bài <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card Exam Previous Result -->
+      <div class="card mx-3 mb-3 border-0 shadow-sm p-3 rounded-lg" style="border-radius: 20px; background: #ffffff;">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <div class="rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 44px; height: 44px; background: var(--primary-light); color: var(--primary); font-size: 1.2rem;">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+              <div class="font-weight-bold text-dark">Kết quả thi gần nhất</div>
+              <small class="text-muted">Xem lại bảng điểm & đối chiếu đáp án</small>
+            </div>
+          </div>
+          <a href="result.html" class="btn btn-light rounded-circle shadow-sm" style="width: 36px; height: 36px; padding: 0; display: inline-flex; align-items: center; justify-content: center;">
+            <i class="fas fa-chevron-right text-muted"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar (Figma Standard) -->
+    <div class="bottom-nav">
+      <a href="index.html" class="nav-item-btn active">
+        <i class="fas fa-home"></i>
+        <span>Trang chủ</span>
+      </a>
+      <a href="take.html" class="nav-item-btn">
+        <i class="fas fa-file-signature"></i>
+        <span>Phòng thi</span>
+      </a>
+      <a href="result.html" class="nav-item-btn">
+        <i class="fas fa-poll-h"></i>
+        <span>Kết quả</span>
+      </a>
+      <a href="https://localhost:44312/Exam" target="_blank" class="nav-item-btn">
+        <i class="fas fa-user-shield"></i>
+        <span>Admin</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal fade" id="examDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 360px;">
+      <div class="modal-content" style="border-radius: 24px; border: none;">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title font-weight-bold">Thông tin phòng thi</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center pt-2">
+          <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; background: var(--primary-light); color: var(--primary); font-size: 1.6rem;">
+            <i class="fas fa-stopwatch"></i>
+          </div>
+          <h6 class="font-weight-bold">ETS TOEIC Reading Test 07</h6>
+          <p class="small text-muted mb-3">Thời gian làm bài: <strong>75 phút</strong> | Tổng số: <strong>100 câu</strong></p>
+          <div class="alert alert-warning text-left small mb-3" style="border-radius: 14px;">
+            <i class="fas fa-info-circle mr-1"></i> Đồng hồ sẽ bắt đầu đếm ngược ngay khi bạn nhấn "Bắt đầu làm bài". Hệ thống sẽ tự động thu bài khi hết giờ.
+          </div>
+          <a href="take.html" class="btn btn-primary-m btn-block">
+            Bắt đầu làm bài <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function openExamDetailModal() {
+      $('#examDetailModal').modal('show');
+    }
+  </script>
+</body>
+</html>

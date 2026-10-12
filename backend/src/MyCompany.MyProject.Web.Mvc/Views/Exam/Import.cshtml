@@ -1,0 +1,129 @@
+@using MyCompany.MyProject.Exams.Dto
+@model ExamImportResultDto
+@{
+    ViewBag.Title = "Import Đề thi từ File Word";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><i class="fas fa-file-upload text-success mr-2"></i>Tạo Đề thi từ File Word (.docx)</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left mr-1"></i> Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+
+        @if (Model != null && !Model.Success && Model.Errors.Any())
+        {
+            <div class="alert alert-danger shadow-sm border-left border-danger" role="alert" style="border-left-width: 6px !important;">
+                <h5 class="alert-heading font-weight-bold">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>HỆ THỐNG PHÁT HIỆN SAI ĐỊNH DẠNG - TOÀN BỘ QUÁ TRÌNH LƯU ĐÃ BỊ HỦY BỎ!
+                </h5>
+                <p class="mb-2">
+                    Theo quy định, hệ thống chỉ lưu khi file Word đúng 100% chuẩn định dạng thẻ và thứ tự câu. Vui lòng rà soát và chỉnh sửa các lỗi sau trong file trước khi upload lại:
+                </p>
+                <hr />
+                <ul class="mb-0 pl-3">
+                    @foreach (var err in Model.Errors)
+                    {
+                        <li class="font-weight-bold">@err</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card card-success card-outline shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold"><i class="fas fa-cloud-upload-alt mr-2"></i>Upload File Đề thi (.docx)</h3>
+                    </div>
+                    <form asp-action="Import" method="post" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="docxFile" class="font-weight-bold">Chọn tệp tin Word (.docx):</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="docxFile" name="docxFile" accept=".docx" required />
+                                    <label class="custom-file-label" for="docxFile">Chọn file .docx...</label>
+                                </div>
+                                <small class="form-text text-muted mt-2">
+                                    <i class="fas fa-info-circle text-info mr-1"></i>
+                                    Chấp nhận định dạng file Word (.docx) chứa bộ thẻ quy chuẩn: [TEST_NAME], [PART 5], [PART 6], [PART 7], [QUESTION], [ANSWER],...
+                                </small>
+                            </div>
+
+                            <div class="p-3 bg-light rounded border border-dashed text-center my-3">
+                                <i class="fas fa-file-word fa-3x text-primary mb-2"></i>
+                                <div id="selectedFileName" class="font-weight-bold text-dark">Chưa chọn file</div>
+                                <div class="small text-muted">Kéo thả file .docx vào đây hoặc bấm nút Chọn file</div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white text-right">
+                            <button type="submit" class="btn btn-success px-4 font-weight-bold shadow-sm">
+                                <i class="fas fa-check-circle mr-1"></i> Kiểm tra & Import vào CSDL
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-5">
+                <div class="card card-info card-outline shadow-sm">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold"><i class="fas fa-tags mr-2"></i>Quy chuẩn Bộ thẻ (Tags) Bắt buộc</h3>
+                    </div>
+                    <div class="card-body small">
+                        <p class="font-weight-bold text-primary mb-1">1. Thông tin chung:</p>
+                        <pre class="bg-light p-2 border rounded"><code>[TEST_NAME] TOEIC Reading Test 07 [/TEST_NAME]
+[DURATION] 75 [/DURATION]
+[TOTAL_QUESTIONS] 100 [/TOTAL_QUESTIONS]</code></pre>
+
+                        <p class="font-weight-bold text-primary mb-1 mt-2">2. Cấu trúc Part 5 (Câu hỏi độc lập 101-130):</p>
+                        <pre class="bg-light p-2 border rounded"><code>[PART 5]
+[QUESTION]
+[NUM] 101 [/NUM]
+[TEXT] Câu hỏi... [/TEXT]
+[A] Đáp án A [/A]
+[B] Đáp án B [/B]
+[C] Đáp án C [/C]
+[D] Đáp án D [/D]
+[ANSWER] A [/ANSWER]
+[/QUESTION]
+[/PART 5]</code></pre>
+
+                        <p class="font-weight-bold text-primary mb-1 mt-2">3. Cấu trúc Part 6 & Part 7 (Nhóm bài đọc):</p>
+                        <pre class="bg-light p-2 border rounded"><code>[PART 6] hoặc [PART 7]
+[GROUP]
+[PASSAGE_TITLE] Questions 131-134... [/PASSAGE_TITLE]
+[PASSAGE] Nội dung bài đọc... [/PASSAGE]
+[QUESTION]
+[NUM] 131 [/NUM]
+...
+[/QUESTION]
+[/GROUP]
+[/PART 6]</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $('#docxFile').on('change', function () {
+            var fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').html(fileName);
+            $('#selectedFileName').html('<i class="fas fa-check-circle text-success mr-1"></i> ' + fileName);
+        });
+    </script>
+}

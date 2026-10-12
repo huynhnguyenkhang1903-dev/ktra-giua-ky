@@ -1,0 +1,201 @@
+@using MyCompany.MyProject.Exams.Dto
+@model ExamResultDto
+@{
+    Layout = "~/Views/Shared/_MobileAppLayout.cshtml";
+    ViewBag.Title = "Kết quả bài thi";
+    var minutesSpent = Model.TimeSpentSeconds / 60;
+    var secondsSpent = Model.TimeSpentSeconds % 60;
+    // Điểm hệ 10
+    double score10 = Math.Round((Model.CorrectCount / (double)Model.TotalQuestions) * 10, 1);
+    // Điểm TOEIC Reading
+    int estReading = (int)Math.Round(5 + (Model.CorrectCount / (double)Model.TotalQuestions) * 490);
+    if (estReading < 5) estReading = 5;
+    if (estReading > 495) estReading = 495;
+}
+
+<style>
+    .result-m-header {
+        padding: 12px 20px;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    .circle-score-m {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        border: 7px solid #4f46e5;
+        margin: 0 auto 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25);
+    }
+    .stat-card-m {
+        border-radius: 16px;
+        padding: 12px 6px;
+        text-align: center;
+        font-weight: 700;
+    }
+    .stat-m-success {
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #059669;
+    }
+    .stat-m-danger {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+    }
+    .stat-m-neutral {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+    }
+    .btn-m-action {
+        border-radius: 14px;
+        padding: 12px 20px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        width: 100%;
+        margin-bottom: 10px;
+        display: block;
+        text-align: center;
+    }
+    .review-item-m {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 10px;
+        font-size: 0.82rem;
+    }
+</style>
+
+<!-- Top Bar: Nút quay lại, Tiêu đề, Nút chia sẻ (Figma Screen 5) -->
+<div class="result-m-header">
+    <a href="/Exam/StudentExams" class="btn btn-sm btn-light rounded-circle" style="width: 32px; height: 32px; padding: 0;">
+        <i class="fas fa-arrow-left text-muted"></i>
+    </a>
+    <h6 class="font-weight-bold text-dark mb-0">Kết quả bài thi</h6>
+    <button class="btn btn-sm btn-light rounded-circle" style="width: 32px; height: 32px; padding: 0;">
+        <i class="fas fa-share-alt text-muted"></i>
+    </button>
+</div>
+
+<div class="p-4 flex-grow-1">
+    <!-- Tiêu đề phần thi -->
+    <div class="text-center mb-3">
+        <span class="badge badge-light border text-muted px-2 py-1 small font-weight-bold">TOEIC READING &bull; TEST 07</span>
+        <h5 class="font-weight-bold text-dark mt-1 mb-0">@Model.ExamTitle</h5>
+        <div class="text-muted small">100 câu hỏi &bull; Thời gian quy định: 75 phút</div>
+    </div>
+
+    <!-- Khối vòng tròn điểm số (Figma Screen 5) -->
+    <div class="bg-white p-4 rounded-xl border text-center shadow-sm mb-4" style="border-radius: 20px;">
+        <div class="circle-score-m">
+            <div class="h2 font-weight-bold text-primary mb-0" style="line-height: 1;">@score10.ToString("0.0")</div>
+            <div class="text-muted small font-weight-bold mt-1" style="font-size: 0.7rem;">trên 10 điểm</div>
+        </div>
+
+        <h5 class="font-weight-bold text-dark mb-1">
+            @(Model.ScorePercentage >= 80 ? "Làm rất tốt, Khang!" : Model.ScorePercentage >= 50 ? "Làm khá tốt!" : "Cần cố gắng thêm nhé!")
+        </h5>
+        <p class="text-muted small mb-2" style="font-size: 0.78rem;">
+            Bạn đã trả lời đúng <strong>@Model.ScorePercentage.ToString("0.0")%</strong> số câu hỏi.<br />
+            Điểm ước tính: <strong class="text-primary">@estReading / 495 điểm TOEIC Reading</strong>.<br />
+            <i class="far fa-clock mr-1"></i>Hoàn thành trong <strong>@minutesSpent phút @secondsSpent giây</strong>.
+        </p>
+
+        <!-- 3 Thẻ thống kê (Đúng, Sai, Bỏ trống - Figma Screen 5) -->
+        <div class="row no-gutters mt-3">
+            <div class="col-4 px-1">
+                <div class="stat-card-m stat-m-success">
+                    <div class="h4 font-weight-bold mb-0">@Model.CorrectCount</div>
+                    <div style="font-size: 0.7rem;"><i class="fas fa-check-circle mr-1"></i>Câu đúng</div>
+                </div>
+            </div>
+            <div class="col-4 px-1">
+                <div class="stat-card-m stat-m-danger">
+                    <div class="h4 font-weight-bold mb-0">@Model.WrongCount</div>
+                    <div style="font-size: 0.7rem;"><i class="fas fa-times-circle mr-1"></i>Câu sai</div>
+                </div>
+            </div>
+            <div class="col-4 px-1">
+                <div class="stat-card-m stat-m-neutral">
+                    <div class="h4 font-weight-bold mb-0">@Model.SkippedCount</div>
+                    <div style="font-size: 0.7rem;"><i class="fas fa-minus-circle mr-1"></i>Bỏ trống</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nút hành động (Figma Screen 5) -->
+    <button type="button" class="btn btn-m-action text-white" style="background: #4f46e5; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35); border: none;" onclick="$('#reviewCollapse').slideToggle(250);">
+        <i class="fas fa-book-reader mr-1"></i> Xem đáp án &amp; lời giải
+    </button>
+    <a href="/Exam/Take/@Model.ExamId" class="btn btn-m-action btn-outline-primary bg-white">
+        <i class="fas fa-redo mr-1"></i> Làm lại đề thi
+    </a>
+    <a href="/Exam/StudentExams" class="btn btn-m-action btn-light text-muted">
+        Về trang chủ đề thi
+    </a>
+
+    <!-- Danh sách chi tiết đáp án (Collapse) -->
+    <div class="collapse mt-3" id="reviewCollapse">
+        <h6 class="font-weight-bold text-dark mb-2">Chi tiết đối chiếu 100 câu:</h6>
+        @foreach (var a in Model.QuestionResults.OrderBy(x => x.QuestionNumber))
+        {
+            var isCorrect = a.IsCorrect;
+            var isSkipped = string.IsNullOrEmpty(a.UserOption);
+            <div class="review-item-m border-left @(isCorrect ? "border-success" : (isSkipped ? "border-secondary" : "border-danger"))" style="border-left-width: 4px !important;">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="font-weight-bold text-dark">Câu @a.QuestionNumber</span>
+                    @if (isCorrect)
+                    {
+                        <span class="badge badge-success px-2 py-1"><i class="fas fa-check mr-1"></i>Đúng</span>
+                    }
+                    else if (isSkipped)
+                    {
+                        <span class="badge badge-secondary px-2 py-1">Bỏ trống</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger px-2 py-1"><i class="fas fa-times mr-1"></i>Sai</span>
+                    }
+                </div>
+                <div class="text-dark font-weight-bold mb-2">@a.QuestionText</div>
+                <div class="d-flex justify-content-between small text-muted">
+                    <span>Bạn chọn: <strong class="@(isCorrect ? "text-success" : "text-danger")">(@(isSkipped ? "Chưa làm" : a.UserOption))</strong></span>
+                    <span>Đáp án đúng: <strong class="text-primary">(@a.CorrectOption)</strong></span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="py-3"></div>
+
+<!-- Bottom Nav (Figma Style) -->
+<div class="bottom-nav">
+    <a href="/Exam/StudentExams" class="nav-item-btn">
+        <i class="fas fa-home"></i>
+        <span>Trang chủ</span>
+    </a>
+    <a href="/Exam/StudentExams" class="nav-item-btn">
+        <i class="fas fa-book-open"></i>
+        <span>Đề thi</span>
+    </a>
+    <a href="/Exam/Result/1" class="nav-item-btn active">
+        <i class="fas fa-chart-line"></i>
+        <span>Kết quả</span>
+    </a>
+    <a href="/Exam" class="nav-item-btn">
+        <i class="fas fa-user-cog"></i>
+        <span>Admin</span>
+    </a>
+</div>

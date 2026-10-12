@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Kết quả bài thi - TOEIC Reading App</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 4.6 & FontAwesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Figma Mobile Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="mobile-frame">
+    <!-- Dynamic Island / iPhone Notch -->
+    <div class="device-notch"></div>
+    
+    <!-- Status Bar (9:41 AM) -->
+    <div class="status-bar">
+      <span>9:41</span>
+      <div class="status-bar-icons">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+
+    <!-- Sticky Header -->
+    <div class="app-header">
+      <a href="index.html" class="text-dark">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </a>
+      <h5 class="mb-0 font-weight-bold">Báo cáo kết quả</h5>
+      <a href="index.html" class="text-primary font-weight-bold small">
+        <i class="fas fa-home"></i>
+      </a>
+    </div>
+
+    <!-- Scrollable Result Content -->
+    <div class="app-content p-3">
+      <!-- Greeting & Title -->
+      <div class="text-center mt-2 mb-3">
+        <small class="text-muted font-weight-bold text-uppercase">Thí sinh: <span id="resCandidateName" class="text-dark">Huỳnh Nguyên Khang</span></small>
+        <h6 class="font-weight-bold text-dark mt-1">ETS TOEIC Reading Test 07</h6>
+      </div>
+
+      <!-- Circle Score Card -->
+      <div class="card border-0 shadow-sm p-4 text-center mb-3" style="border-radius: 24px; background: #ffffff;">
+        <div class="circle-score-box">
+          <span class="text-muted small font-weight-bold">ĐIỂM SỐ</span>
+          <h2 class="font-weight-bold text-primary mb-0" id="resScore10">10</h2>
+          <span class="text-muted small">Thang điểm 10</span>
+        </div>
+
+        <div class="badge badge-light text-primary py-2 px-3 mx-auto font-weight-bold rounded-pill mb-1" style="background: var(--primary-light); font-size: 0.95rem;">
+          <i class="fas fa-award mr-1"></i> TOEIC Reading: <span id="resToeicScore">495/495</span>
+        </div>
+      </div>
+
+      <!-- Quick Stats Grid (Đúng, Sai, Bỏ qua, Thời gian) -->
+      <div class="row no-gutters mb-3" style="gap: 8px;">
+        <div class="col stat-pill success">
+          <small class="d-block mb-1">ĐÚNG</small>
+          <h5 class="font-weight-bold mb-0" id="resCorrectCount">0</h5>
+        </div>
+        <div class="col stat-pill danger">
+          <small class="d-block mb-1">SAI</small>
+          <h5 class="font-weight-bold mb-0" id="resWrongCount">0</h5>
+        </div>
+        <div class="col stat-pill neutral">
+          <small class="d-block mb-1">BỎ QUA</small>
+          <h5 class="font-weight-bold mb-0" id="resSkippedCount">0</h5>
+        </div>
+        <div class="col stat-pill neutral">
+          <small class="d-block mb-1">THỜI GIAN</small>
+          <h5 class="font-weight-bold mb-0" id="resTimeSpent">--</h5>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex gap-2 mb-4" style="gap: 10px;">
+        <a href="take.html" class="btn btn-outline-primary btn-block font-weight-bold rounded-pill m-0 py-2">
+          <i class="fas fa-redo-alt mr-1"></i> Thi lại
+        </a>
+        <a href="index.html" class="btn btn-primary-m btn-block font-weight-bold rounded-pill m-0 py-2">
+          <i class="fas fa-home mr-1"></i> Trang chủ
+        </a>
+      </div>
+
+      <!-- Answer Review Section Header -->
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h6 class="font-weight-bold text-dark mb-0">Đối chiếu chi tiết 100 câu</h6>
+        <span class="badge badge-primary px-2 py-1 font-weight-bold" style="background: var(--primary);">PART 5, 6, 7</span>
+      </div>
+
+      <!-- Detailed Review List -->
+      <div id="reviewListContainer">
+        <!-- Render 100 questions comparison -->
+      </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+      <a href="index.html" class="nav-item-btn">
+        <i class="fas fa-home"></i>
+        <span>Trang chủ</span>
+      </a>
+      <a href="take.html" class="nav-item-btn">
+        <i class="fas fa-file-signature"></i>
+        <span>Phòng thi</span>
+      </a>
+      <a href="result.html" class="nav-item-btn active">
+        <i class="fas fa-poll-h"></i>
+        <span>Kết quả</span>
+      </a>
+      <a href="https://localhost:44312/Exam" target="_blank" class="nav-item-btn">
+        <i class="fas fa-user-shield"></i>
+        <span>Admin</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.app.initResultScreen();
+    });
+  </script>
+</body>
+</html>

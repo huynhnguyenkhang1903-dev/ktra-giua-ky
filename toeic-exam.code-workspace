@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "backend",
+      "path": "backend"
+    },
+    {
+      "name": "frontend",
+      "path": "frontend"
+    }
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bin": true,
+      "**/obj": true
+    },
+    "dotnet.defaultSolution": "backend/MyCompany.MyProject.sln",
+    "omnisharp.defaultLaunchSolution": "backend/MyCompany.MyProject.sln"
+  }
+}

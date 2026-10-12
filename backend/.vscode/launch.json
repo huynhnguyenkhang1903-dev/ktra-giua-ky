@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Chrome",
+      "port": 9222,
+      "request": "attach",
+      "type": "chrome",
+      "webRoot": "${workspaceFolder}"
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+      "name": ".NET Core Launch (Web.Mvc)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/MyCompany.MyProject.Web.Mvc/bin/Debug/net9.0/MyCompany.MyProject.Web.Mvc.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/MyCompany.MyProject.Web.Mvc",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_ROLL_FORWARD": "Major"
+      }
+    }
+  ]
+}
